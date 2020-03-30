@@ -1,0 +1,95 @@
+<template>
+    <b-modal id="modal-edit-subscriber" title="Edit Subscriber">
+        <b-form-group
+            label="Name"
+            label-for="name"
+        >
+            <b-form-input id="name" v-model="form.name" trim required></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+            label="Email"
+            label-for="email"
+        >
+            <b-form-input id="email" v-model="form.email" trim required type="email"></b-form-input>
+        </b-form-group>
+
+        <template v-for="(field,index) in form.fields">
+            <b-form-group
+                :label="field.title"
+                :label-for="field.title"
+            >
+                <b-form-input :id="field.title"
+                              v-model="form.fields[index].value">
+                </b-form-input>
+            </b-form-group>
+        </template>
+
+        <b-alert v-model="errors.length > 0" variant="danger" dismissible>
+            <ul class="list-unstyled mb-0">
+                <li v-for="error in errors" v-text="error"></li>
+            </ul>
+        </b-alert>
+
+        <template v-slot:modal-footer>
+            <b-button @click="hideModal">
+                Cancel
+            </b-button>
+            <b-button variant="success" @click="editSubscriber">
+                Update
+            </b-button>
+        </template>
+    </b-modal>
+</template>
+
+<script>
+    export default {
+        props: ['fields', 'subscriber'],
+        data() {
+            return {
+                errors: []
+            }
+        },
+        methods: {
+            hideModal() {
+                this.$bvModal.hide('modal-edit-subscriber')
+            },
+            fieldInputType(field) {
+                return 'string';
+            },
+            editSubscriber() {
+                const vm = this;
+                axios.put(`/api/subscribers/${this.subscriber.id}`, this.formData)
+                    .then(function (response) {
+                        Event.$emit('subscriber:updated', response.data);
+                        vm.hideModal();
+                    })
+                    .catch(function (error) {
+                        vm.errors = error.response.data.errors;
+                    });
+            }
+        },
+        computed: {
+            form() {
+                return {
+                    name: this.subscriber.name,
+                    email: this.subscriber.email,
+                    fields: _.map(_.unionBy(this.subscriber.fields, this.fields, 'id'), function(field) {
+                        field.value = field.pivot ? field.pivot.value : '';
+                        return field;
+                    })
+                }
+            },
+            formData() {
+                return {
+                    name: this.form.name,
+                    email: this.form.email,
+                    fields: _.pickBy(_.zipObject(
+                        _.map(this.form.fields, 'id'),
+                        _.map(this.form.fields, 'value')
+                    ))
+                }
+            }
+        }
+    }
+</script>

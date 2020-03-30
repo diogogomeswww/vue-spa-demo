@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UI Rest Client</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <script src="js/app.js" async></script>
+</head>
+<body class="min-vh-100">
+<div id="app">
+    <div class="container-fluid">
+
+        <notifications position="top center" class="mt-1"></notifications>
+
+        <div class="row">
+            <sidebar :user="user" v-if="user"></sidebar>
+
+            <div class="col card m-4">
+                <div class="card-body">
+                    <router-view :fields="fields" :subscribers="subscribers"></router-view>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
