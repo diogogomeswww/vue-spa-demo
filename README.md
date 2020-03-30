@@ -17,6 +17,7 @@ App using Laravel 7.3.0 framework.
 - XML PHP Extension
 - SQlite3 PHP Extension
 
+
 ## Setup on local
 
 Back-end:
@@ -27,18 +28,17 @@ Back-end:
 
 Front-end
 - Create a virtual host with the document root equals to 'this project root folder' + 'public/ui-client/'
-- Login credentials
-```
-email: johndoe@example.com
-password: password
-``` 
+- Login credentials: 
+    - email: johndoe@example.com
+    - password: password
+
 
 ## TODO
 
-- Subscribers Fields => set input type based on field's type: date, boolean... and validate the field
+- Frontend: add/edit subscriber => set input type based on field's type: date, boolean... and validate the field
+- Backend: add/edit subscriber => validate cast/validate type for each field's value  
 - Confirmation dialog for delete actions
 - Test responsive layout
 - Add transitions
 - UX - add click listener on table row => edit resource
-- Backend: add/edit subscriber => validate cast/validate type for each field's value  
 - Fix routing issues when refreshing, going back in navigation,...
