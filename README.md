@@ -35,10 +35,9 @@ Front-end
 
 ## TODO
 
-- Frontend: add/edit subscriber => set input type based on field's type: date, boolean... and validate the field
+- Frontend: fix bug when creating a new subscriber, the custom fields only appear on a second try, and they are not being sent to the server 
 - Backend: add/edit subscriber => validate cast/validate type for each field's value  
 - Confirmation dialog for delete actions
 - Test responsive layout
 - Add transitions
 - UX - add click listener on table row => edit resource
-- Fix routing issues when logging out, refreshing, going back in navigation,...
