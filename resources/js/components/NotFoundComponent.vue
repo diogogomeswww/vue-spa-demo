@@ -1,7 +1,9 @@
-<template>
-    <h1>Login</h1>
-</template>
+<template></template>
 
 <script>
-    export default {};
+    export default {
+        mounted() {
+            this.$router.replace('/fields')
+        }
+    };
 </script>

@@ -54,8 +54,15 @@
                     .then(function (response) {
                         Event.$emit('field:new', response.data);
                         vm.hideModal();
+                        vm.resetForm();
                     })
                     .catch(console.error);
+            },
+            resetForm() {
+                this.form = {
+                    title: '',
+                    type: 'string'
+                }
             }
         }
     }

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscriber extends Model
@@ -44,13 +43,16 @@ class Subscriber extends Model
     public function syncField($field, $value)
     {
         $field_id = is_int($field) ? $field : $field->getKey();
-        $subscriber_id = $this->getKey();
 
         if (empty($value)) {
             $this->fields()->detach($field_id);
         } else {
-            DB::table('field_subscriber')
-                ->updateOrInsert(compact('field_id', 'subscriber_id'), compact('value'));
+            // prevent duplicates
+            if ($this->fields()->where(compact('field_id'))->exists()) {
+                $this->fields()->updateExistingPivot($field_id, compact('value'));
+            } else {
+                $this->fields()->attach($field_id, compact('value'));
+            }
         }
     }
 }

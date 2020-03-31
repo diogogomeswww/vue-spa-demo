@@ -1971,7 +1971,14 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/fields', this.form).then(function (response) {
         Event.$emit('field:new', response.data);
         vm.hideModal();
+        vm.resetForm();
       })["catch"](console.error);
+    },
+    resetForm: function resetForm() {
+      this.form = {
+        title: '',
+        type: 'string'
+      };
     }
   }
 });
@@ -1987,6 +1994,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -2036,6 +2044,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     formData: function formData() {
       return {
+        // do not allow editing the type
         title: this.form.title
       };
     }
@@ -2206,9 +2215,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 //
 //
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.$router.replace('/fields');
+  }
+});
 
 /***/ }),
 
@@ -2277,6 +2288,28 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2421,6 +2454,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['fields', 'subscriber'],
   data: function data() {
@@ -2431,9 +2486,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     hideModal: function hideModal() {
       this.$bvModal.hide('modal-edit-subscriber');
-    },
-    fieldInputType: function fieldInputType(field) {
-      return 'string';
     },
     editSubscriber: function editSubscriber() {
       var vm = this;
@@ -2556,6 +2608,13 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    fieldValue: function fieldValue(field) {
+      if (field.type === 'boolean') {
+        return field.pivot.value === 1 ? 'Yes' : 'No';
+      }
+
+      return field.pivot.value;
+    },
     setCurrent: function setCurrent(subscriber) {
       this.current = subscriber;
     },
@@ -63428,7 +63487,7 @@ var render = function() {
       _c(
         "b-form-group",
         { attrs: { label: "Type", "label-for": "type" } },
-        [_c("b-form-input", { attrs: { value: _vm.form.type } })],
+        [_c("b-form-input", { attrs: { value: _vm.form.type, disabled: "" } })],
         1
       )
     ],
@@ -63466,15 +63525,14 @@ var render = function() {
           _c(
             "a",
             {
-              directives: [
-                {
-                  name: "b-modal",
-                  rawName: "v-b-modal.modal-create-field",
-                  modifiers: { "modal-create-field": true }
-                }
-              ],
               staticClass: "ml-2",
-              attrs: { href: "#" }
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.$bvModal.show("modal-create-field")
+                }
+              }
             },
             [_c("b-icon-plus")],
             1
@@ -63499,6 +63557,7 @@ var render = function() {
                         attrs: { href: "#" },
                         on: {
                           click: function($event) {
+                            $event.preventDefault()
                             return _vm.deleteField(data.item.id)
                           }
                         }
@@ -63520,6 +63579,7 @@ var render = function() {
                         attrs: { href: "#" },
                         on: {
                           click: function($event) {
+                            $event.preventDefault()
                             _vm.current = data.item
                           }
                         }
@@ -63678,7 +63738,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("Login")])
+  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -63783,7 +63843,11 @@ var render = function() {
   return _c(
     "b-modal",
     {
-      attrs: { id: "modal-create-subscriber", title: "New Subscriber" },
+      attrs: {
+        id: "modal-create-subscriber",
+        size: "lg",
+        title: "New Subscriber"
+      },
       scopedSlots: _vm._u([
         {
           key: "modal-footer",
@@ -63810,7 +63874,14 @@ var render = function() {
     [
       _c(
         "b-form-group",
-        { attrs: { label: "Name", "label-for": "name" } },
+        {
+          attrs: {
+            label: "Name",
+            "label-for": "name",
+            "label-cols-sm": "12",
+            "label-cols-md": "3"
+          }
+        },
         [
           _c("b-form-input", {
             attrs: { id: "name", trim: "", required: "" },
@@ -63828,7 +63899,14 @@ var render = function() {
       _vm._v(" "),
       _c(
         "b-form-group",
-        { attrs: { label: "Email", "label-for": "email" } },
+        {
+          attrs: {
+            label: "Email",
+            "label-for": "email",
+            "label-cols-sm": "12",
+            "label-cols-md": "3"
+          }
+        },
         [
           _c("b-form-input", {
             attrs: { id: "email", trim: "", required: "", type: "email" },
@@ -63848,18 +63926,55 @@ var render = function() {
         return [
           _c(
             "b-form-group",
-            { attrs: { label: field.title, "label-for": field.title } },
+            {
+              attrs: {
+                label: field.title,
+                "label-for": "field_" + field.id,
+                "label-cols-sm": "12",
+                "label-cols-md": "3"
+              }
+            },
             [
-              _c("b-form-input", {
-                attrs: { id: field.title },
-                model: {
-                  value: _vm.form.fields[index].value,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form.fields[index], "value", $$v)
-                  },
-                  expression: "form.fields[index].value"
-                }
-              })
+              field.type === "boolean"
+                ? _c("b-form-checkbox", {
+                    staticClass: "mt-1",
+                    attrs: {
+                      id: "field_" + field.id,
+                      value: "1",
+                      "unchecked-value": "0"
+                    },
+                    model: {
+                      value: _vm.form.fields[index].value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                      },
+                      expression: "form.fields[index].value"
+                    }
+                  })
+                : field.type === "date"
+                ? _c("b-form-datepicker", {
+                    attrs: { id: "field_" + field.id },
+                    model: {
+                      value: _vm.form.fields[index].value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                      },
+                      expression: "form.fields[index].value"
+                    }
+                  })
+                : _c("b-form-input", {
+                    attrs: {
+                      id: "field_" + field.id,
+                      type: field.type === "string" ? "text" : field.type
+                    },
+                    model: {
+                      value: _vm.form.fields[index].value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                      },
+                      expression: "form.fields[index].value"
+                    }
+                  })
             ],
             1
           )
@@ -63918,7 +64033,11 @@ var render = function() {
   return _c(
     "b-modal",
     {
-      attrs: { id: "modal-edit-subscriber", title: "Edit Subscriber" },
+      attrs: {
+        id: "modal-edit-subscriber",
+        size: "lg",
+        title: "Edit Subscriber"
+      },
       scopedSlots: _vm._u([
         {
           key: "modal-footer",
@@ -63945,7 +64064,14 @@ var render = function() {
     [
       _c(
         "b-form-group",
-        { attrs: { label: "Name", "label-for": "name" } },
+        {
+          attrs: {
+            label: "Name",
+            "label-for": "name",
+            "label-cols-sm": "12",
+            "label-cols-md": "3"
+          }
+        },
         [
           _c("b-form-input", {
             attrs: { id: "name", trim: "", required: "" },
@@ -63963,7 +64089,14 @@ var render = function() {
       _vm._v(" "),
       _c(
         "b-form-group",
-        { attrs: { label: "Email", "label-for": "email" } },
+        {
+          attrs: {
+            label: "Email",
+            "label-for": "email",
+            "label-cols-sm": "12",
+            "label-cols-md": "3"
+          }
+        },
         [
           _c("b-form-input", {
             attrs: { id: "email", trim: "", required: "", type: "email" },
@@ -63983,18 +64116,55 @@ var render = function() {
         return [
           _c(
             "b-form-group",
-            { attrs: { label: field.title, "label-for": field.title } },
+            {
+              attrs: {
+                label: field.title,
+                "label-for": "field_" + field.id,
+                "label-cols-sm": "12",
+                "label-cols-md": "3"
+              }
+            },
             [
-              _c("b-form-input", {
-                attrs: { id: field.title },
-                model: {
-                  value: _vm.form.fields[index].value,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form.fields[index], "value", $$v)
-                  },
-                  expression: "form.fields[index].value"
-                }
-              })
+              field.type === "boolean"
+                ? _c("b-form-checkbox", {
+                    staticClass: "mt-1",
+                    attrs: {
+                      id: "field_" + field.id,
+                      value: "1",
+                      "unchecked-value": "0"
+                    },
+                    model: {
+                      value: _vm.form.fields[index].value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                      },
+                      expression: "form.fields[index].value"
+                    }
+                  })
+                : field.type === "date"
+                ? _c("b-form-datepicker", {
+                    attrs: { id: "field_" + field.id },
+                    model: {
+                      value: _vm.form.fields[index].value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                      },
+                      expression: "form.fields[index].value"
+                    }
+                  })
+                : _c("b-form-input", {
+                    attrs: {
+                      id: "field_" + field.id,
+                      type: field.type === "string" ? "text" : field.type
+                    },
+                    model: {
+                      value: _vm.form.fields[index].value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                      },
+                      expression: "form.fields[index].value"
+                    }
+                  })
             ],
             1
           )
@@ -64059,15 +64229,14 @@ var render = function() {
           _c(
             "a",
             {
-              directives: [
-                {
-                  name: "b-modal",
-                  rawName: "v-b-modal.modal-create-subscriber",
-                  modifiers: { "modal-create-subscriber": true }
-                }
-              ],
               staticClass: "ml-2",
-              attrs: { href: "#" }
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.$bvModal.show("modal-create-subscriber")
+                }
+              }
             },
             [_c("b-icon-plus")],
             1
@@ -64092,11 +64261,12 @@ var render = function() {
                             _vm._l(data.value, function(field) {
                               return [
                                 _c("dt", [
-                                  _c("strong", [_vm._v(_vm._s(field.title))]),
-                                  _vm._v(":")
+                                  _c("strong", [_vm._v(_vm._s(field.title))])
                                 ]),
                                 _vm._v(" "),
-                                _c("dd", [_vm._v(_vm._s(field.pivot.value))])
+                                _c("dd", [
+                                  _vm._v(_vm._s(_vm.fieldValue(field)))
+                                ])
                               ]
                             })
                           ],
@@ -64117,6 +64287,7 @@ var render = function() {
                         attrs: { href: "#" },
                         on: {
                           click: function($event) {
+                            $event.preventDefault()
                             return _vm.deleteSubscriber(data.item.id)
                           }
                         }
@@ -64138,6 +64309,7 @@ var render = function() {
                         attrs: { href: "#" },
                         on: {
                           click: function($event) {
+                            $event.preventDefault()
                             return _vm.setCurrent(data.item)
                           }
                         }
@@ -80566,10 +80738,10 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           id: field_id
         });
 
-        app.fields.splice(index, 1);
         this.$notify({
           text: "Field ".concat(app.fields[index].title, " deleted.")
         });
+        app.fields.splice(index, 1);
       }); // Subscribers
 
       Event.$on('subscriber:updated', function (subscriber) {
@@ -80591,10 +80763,10 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           id: subscriber_id
         });
 
-        app.subscribers.splice(index, 1);
         this.$notify({
-          text: "Subscribers ".concat(app.subscribers[index].title, " deleted.")
+          text: "Subscribers ".concat(app.subscribers[index].name, " deleted.")
         });
+        app.subscribers.splice(index, 1);
       });
     }
   },
