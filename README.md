@@ -35,7 +35,6 @@ Front-end
 
 ## TODO
 
-- Frontend bug: edit field type is a free input text.
 - Frontend: add/edit subscriber => set input type based on field's type: date, boolean... and validate the field
 - Backend: add/edit subscriber => validate cast/validate type for each field's value  
 - Confirmation dialog for delete actions

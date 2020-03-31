@@ -1971,7 +1971,14 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/fields', this.form).then(function (response) {
         Event.$emit('field:new', response.data);
         vm.hideModal();
+        vm.resetForm();
       })["catch"](console.error);
+    },
+    resetForm: function resetForm() {
+      this.form = {
+        title: '',
+        type: 'string'
+      };
     }
   }
 });
