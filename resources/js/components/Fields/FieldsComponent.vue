@@ -2,7 +2,7 @@
     <div>
         <div>
             <h2>Fields
-                <a href="#" class="ml-2" v-b-modal.modal-create-field>
+                <a href="#/fields" class="ml-2" v-b-modal.modal-create-field>
                     <b-icon-plus></b-icon-plus>
                 </a>
             </h2>
@@ -13,10 +13,10 @@
                      :fields="columns">
 
                 <template v-slot:cell(actions)="data">
-                    <a href="#" @click="deleteField(data.item.id)" class="mr-2">
+                    <a href="#" @click.prevent="deleteField(data.item.id)" class="mr-2">
                         <b-icon-trash scale="1.5"></b-icon-trash>
                     </a>
-                    <a href="#" v-b-modal.modal-edit-field @click="current = data.item">
+                    <a href="#" v-b-modal.modal-edit-field @click.prevent="current = data.item">
                         <b-icon-pencil scale="1.5"></b-icon-pencil>
                     </a>
                 </template>
