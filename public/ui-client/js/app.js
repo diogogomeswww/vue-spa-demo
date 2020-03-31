@@ -2338,6 +2338,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['fields'],
   data: function data() {
@@ -2444,6 +2460,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['fields', 'subscriber'],
   data: function data() {
@@ -2454,9 +2486,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     hideModal: function hideModal() {
       this.$bvModal.hide('modal-edit-subscriber');
-    },
-    fieldInputType: function fieldInputType(field) {
-      return 'string';
     },
     editSubscriber: function editSubscriber() {
       var vm = this;
@@ -2579,6 +2608,13 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    fieldValue: function fieldValue(field) {
+      if (field.type === 'boolean') {
+        return field.pivot.value === 1 ? 'Yes' : 'No';
+      }
+
+      return field.pivot.value;
+    },
     setCurrent: function setCurrent(subscriber) {
       this.current = subscriber;
     },
@@ -63892,22 +63928,52 @@ var render = function() {
             {
               attrs: {
                 label: field.title,
-                "label-for": field.title,
+                "label-for": "field_" + field.id,
                 "label-cols-sm": "12",
                 "label-cols-md": "3"
               }
             },
             [
-              _c("b-form-input", {
-                attrs: { id: field.title },
-                model: {
-                  value: _vm.form.fields[index].value,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form.fields[index], "value", $$v)
-                  },
-                  expression: "form.fields[index].value"
-                }
-              })
+              field.type === "boolean"
+                ? _c("b-form-checkbox", {
+                    staticClass: "mt-1",
+                    attrs: {
+                      id: "field_" + field.id,
+                      value: "1",
+                      "unchecked-value": "0"
+                    },
+                    model: {
+                      value: _vm.form.fields[index].value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                      },
+                      expression: "form.fields[index].value"
+                    }
+                  })
+                : field.type === "date"
+                ? _c("b-form-datepicker", {
+                    attrs: { id: "field_" + field.id },
+                    model: {
+                      value: _vm.form.fields[index].value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                      },
+                      expression: "form.fields[index].value"
+                    }
+                  })
+                : _c("b-form-input", {
+                    attrs: {
+                      id: "field_" + field.id,
+                      type: field.type === "string" ? "text" : field.type
+                    },
+                    model: {
+                      value: _vm.form.fields[index].value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                      },
+                      expression: "form.fields[index].value"
+                    }
+                  })
             ],
             1
           )
@@ -64052,22 +64118,52 @@ var render = function() {
             {
               attrs: {
                 label: field.title,
-                "label-for": field.title,
+                "label-for": "field_" + field.id,
                 "label-cols-sm": "12",
                 "label-cols-md": "3"
               }
             },
             [
-              _c("b-form-input", {
-                attrs: { id: field.title },
-                model: {
-                  value: _vm.form.fields[index].value,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form.fields[index], "value", $$v)
-                  },
-                  expression: "form.fields[index].value"
-                }
-              })
+              field.type === "boolean"
+                ? _c("b-form-checkbox", {
+                    staticClass: "mt-1",
+                    attrs: {
+                      id: "field_" + field.id,
+                      value: "1",
+                      "unchecked-value": "0"
+                    },
+                    model: {
+                      value: _vm.form.fields[index].value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                      },
+                      expression: "form.fields[index].value"
+                    }
+                  })
+                : field.type === "date"
+                ? _c("b-form-datepicker", {
+                    attrs: { id: "field_" + field.id },
+                    model: {
+                      value: _vm.form.fields[index].value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                      },
+                      expression: "form.fields[index].value"
+                    }
+                  })
+                : _c("b-form-input", {
+                    attrs: {
+                      id: "field_" + field.id,
+                      type: field.type === "string" ? "text" : field.type
+                    },
+                    model: {
+                      value: _vm.form.fields[index].value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                      },
+                      expression: "form.fields[index].value"
+                    }
+                  })
             ],
             1
           )
@@ -64140,7 +64236,7 @@ var render = function() {
                 }
               ],
               staticClass: "ml-2",
-              attrs: { href: "#" }
+              attrs: { href: "#/subscribers" }
             },
             [_c("b-icon-plus")],
             1
@@ -64165,11 +64261,12 @@ var render = function() {
                             _vm._l(data.value, function(field) {
                               return [
                                 _c("dt", [
-                                  _c("strong", [_vm._v(_vm._s(field.title))]),
-                                  _vm._v(":")
+                                  _c("strong", [_vm._v(_vm._s(field.title))])
                                 ]),
                                 _vm._v(" "),
-                                _c("dd", [_vm._v(_vm._s(field.pivot.value))])
+                                _c("dd", [
+                                  _vm._v(_vm._s(_vm.fieldValue(field)))
+                                ])
                               ]
                             })
                           ],
@@ -64190,6 +64287,7 @@ var render = function() {
                         attrs: { href: "#" },
                         on: {
                           click: function($event) {
+                            $event.preventDefault()
                             return _vm.deleteSubscriber(data.item.id)
                           }
                         }
@@ -64211,6 +64309,7 @@ var render = function() {
                         attrs: { href: "#" },
                         on: {
                           click: function($event) {
+                            $event.preventDefault()
                             return _vm.setCurrent(data.item)
                           }
                         }

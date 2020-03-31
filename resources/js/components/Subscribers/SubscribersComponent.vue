@@ -2,7 +2,7 @@
     <div>
         <div>
             <h2>Subscribers
-                <a href="#" class="ml-2" v-b-modal.modal-create-subscriber>
+                <a href="#/subscribers" class="ml-2" v-b-modal.modal-create-subscriber >
                     <b-icon-plus></b-icon-plus>
                 </a>
             </h2>
@@ -15,17 +15,17 @@
                 <template v-slot:cell(fields)="data">
                     <dl v-if="data.value.length">
                         <template v-for="field in data.value">
-                            <dt><strong>{{ field.title }}</strong>:</dt>
-                            <dd>{{ field.pivot.value }}</dd>
+                            <dt><strong>{{ field.title }}</strong></dt>
+                            <dd>{{ fieldValue(field) }}</dd>
                         </template>
                     </dl>
                 </template>
 
                 <template v-slot:cell(actions)="data">
-                    <a href="#" @click="deleteSubscriber(data.item.id)" class="mr-2">
+                    <a href="#" @click.prevent="deleteSubscriber(data.item.id)" class="mr-2">
                         <b-icon-trash scale="1.5"></b-icon-trash>
                     </a>
-                    <a href="#" v-b-modal.modal-edit-subscriber @click="setCurrent(data.item)">
+                    <a href="#" v-b-modal.modal-edit-subscriber @click.prevent="setCurrent(data.item)">
                         <b-icon-pencil scale="1.5"></b-icon-pencil>
                     </a>
                 </template>
@@ -83,6 +83,12 @@
             }
         },
         methods: {
+            fieldValue(field) {
+                if (field.type === 'boolean') {
+                    return field.pivot.value === 1 ? 'Yes' : 'No';
+                }
+                return field.pivot.value;
+            },
             setCurrent(subscriber) {
                 this.current = subscriber;
             },
