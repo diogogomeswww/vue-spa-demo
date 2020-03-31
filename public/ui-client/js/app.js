@@ -63525,15 +63525,14 @@ var render = function() {
           _c(
             "a",
             {
-              directives: [
-                {
-                  name: "b-modal",
-                  rawName: "v-b-modal.modal-create-field",
-                  modifiers: { "modal-create-field": true }
-                }
-              ],
               staticClass: "ml-2",
-              attrs: { href: "#" }
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.$bvModal.show("modal-create-field")
+                }
+              }
             },
             [_c("b-icon-plus")],
             1
@@ -63558,6 +63557,7 @@ var render = function() {
                         attrs: { href: "#" },
                         on: {
                           click: function($event) {
+                            $event.preventDefault()
                             return _vm.deleteField(data.item.id)
                           }
                         }
@@ -63579,6 +63579,7 @@ var render = function() {
                         attrs: { href: "#" },
                         on: {
                           click: function($event) {
+                            $event.preventDefault()
                             _vm.current = data.item
                           }
                         }
@@ -64228,15 +64229,14 @@ var render = function() {
           _c(
             "a",
             {
-              directives: [
-                {
-                  name: "b-modal",
-                  rawName: "v-b-modal.modal-create-subscriber",
-                  modifiers: { "modal-create-subscriber": true }
-                }
-              ],
               staticClass: "ml-2",
-              attrs: { href: "#/subscribers" }
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.$bvModal.show("modal-create-subscriber")
+                }
+              }
             },
             [_c("b-icon-plus")],
             1

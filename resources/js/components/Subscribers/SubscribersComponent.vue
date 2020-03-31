@@ -2,7 +2,7 @@
     <div>
         <div>
             <h2>Subscribers
-                <a href="#/subscribers" class="ml-2" v-b-modal.modal-create-subscriber >
+                <a href="#" @click.prevent="$bvModal.show('modal-create-subscriber')" class="ml-2">
                     <b-icon-plus></b-icon-plus>
                 </a>
             </h2>

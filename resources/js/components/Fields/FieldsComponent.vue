@@ -2,7 +2,7 @@
     <div>
         <div>
             <h2>Fields
-                <a href="#/fields" class="ml-2" v-b-modal.modal-create-field>
+                <a href="#" @click.prevent="$bvModal.show('modal-create-field')" class="ml-2">
                     <b-icon-plus></b-icon-plus>
                 </a>
             </h2>
