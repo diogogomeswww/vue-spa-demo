@@ -1,8 +1,10 @@
 <template>
-    <b-modal id="modal-edit-subscriber" title="Edit Subscriber">
+    <b-modal id="modal-edit-subscriber" size="lg" title="Edit Subscriber">
         <b-form-group
             label="Name"
             label-for="name"
+            label-cols-sm="12"
+            label-cols-md="3"
         >
             <b-form-input id="name" v-model="form.name" trim required></b-form-input>
         </b-form-group>
@@ -10,6 +12,8 @@
         <b-form-group
             label="Email"
             label-for="email"
+            label-cols-sm="12"
+            label-cols-md="3"
         >
             <b-form-input id="email" v-model="form.email" trim required type="email"></b-form-input>
         </b-form-group>
@@ -18,6 +22,8 @@
             <b-form-group
                 :label="field.title"
                 :label-for="field.title"
+                label-cols-sm="12"
+                label-cols-md="3"
             >
                 <b-form-input :id="field.title"
                               v-model="form.fields[index].value">

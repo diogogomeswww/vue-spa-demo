@@ -2330,6 +2330,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['fields'],
   data: function data() {
@@ -2386,6 +2392,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -63792,7 +63804,11 @@ var render = function() {
   return _c(
     "b-modal",
     {
-      attrs: { id: "modal-create-subscriber", title: "New Subscriber" },
+      attrs: {
+        id: "modal-create-subscriber",
+        size: "lg",
+        title: "New Subscriber"
+      },
       scopedSlots: _vm._u([
         {
           key: "modal-footer",
@@ -63819,7 +63835,14 @@ var render = function() {
     [
       _c(
         "b-form-group",
-        { attrs: { label: "Name", "label-for": "name" } },
+        {
+          attrs: {
+            label: "Name",
+            "label-for": "name",
+            "label-cols-sm": "12",
+            "label-cols-md": "3"
+          }
+        },
         [
           _c("b-form-input", {
             attrs: { id: "name", trim: "", required: "" },
@@ -63837,7 +63860,14 @@ var render = function() {
       _vm._v(" "),
       _c(
         "b-form-group",
-        { attrs: { label: "Email", "label-for": "email" } },
+        {
+          attrs: {
+            label: "Email",
+            "label-for": "email",
+            "label-cols-sm": "12",
+            "label-cols-md": "3"
+          }
+        },
         [
           _c("b-form-input", {
             attrs: { id: "email", trim: "", required: "", type: "email" },
@@ -63857,7 +63887,14 @@ var render = function() {
         return [
           _c(
             "b-form-group",
-            { attrs: { label: field.title, "label-for": field.title } },
+            {
+              attrs: {
+                label: field.title,
+                "label-for": field.title,
+                "label-cols-sm": "12",
+                "label-cols-md": "3"
+              }
+            },
             [
               _c("b-form-input", {
                 attrs: { id: field.title },
@@ -63927,7 +63964,11 @@ var render = function() {
   return _c(
     "b-modal",
     {
-      attrs: { id: "modal-edit-subscriber", title: "Edit Subscriber" },
+      attrs: {
+        id: "modal-edit-subscriber",
+        size: "lg",
+        title: "Edit Subscriber"
+      },
       scopedSlots: _vm._u([
         {
           key: "modal-footer",
@@ -63954,7 +63995,14 @@ var render = function() {
     [
       _c(
         "b-form-group",
-        { attrs: { label: "Name", "label-for": "name" } },
+        {
+          attrs: {
+            label: "Name",
+            "label-for": "name",
+            "label-cols-sm": "12",
+            "label-cols-md": "3"
+          }
+        },
         [
           _c("b-form-input", {
             attrs: { id: "name", trim: "", required: "" },
@@ -63972,7 +64020,14 @@ var render = function() {
       _vm._v(" "),
       _c(
         "b-form-group",
-        { attrs: { label: "Email", "label-for": "email" } },
+        {
+          attrs: {
+            label: "Email",
+            "label-for": "email",
+            "label-cols-sm": "12",
+            "label-cols-md": "3"
+          }
+        },
         [
           _c("b-form-input", {
             attrs: { id: "email", trim: "", required: "", type: "email" },
@@ -63992,7 +64047,14 @@ var render = function() {
         return [
           _c(
             "b-form-group",
-            { attrs: { label: field.title, "label-for": field.title } },
+            {
+              attrs: {
+                label: field.title,
+                "label-for": field.title,
+                "label-cols-sm": "12",
+                "label-cols-md": "3"
+              }
+            },
             [
               _c("b-form-input", {
                 attrs: { id: field.title },
