@@ -121,7 +121,7 @@ const app = new Vue({
             Event.$on('subscriber:deleted', function (subscriber_id) {
                 let index = _.findIndex(app.subscribers, {id: subscriber_id});
                 app.subscribers.splice(index, 1);
-                this.$notify({text: `Subscribers ${app.subscribers[index].title} deleted.`});
+                this.$notify({text: `Subscribers ${app.subscribers[index].name} deleted.`});
             });
         }
     },
