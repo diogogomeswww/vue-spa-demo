@@ -62,8 +62,6 @@ class SubscriberController extends Controller
      */
     public function update(Request $request, Subscriber $subscriber)
     {
-        logger(__METHOD__, $subscriber->toArray());
-
         $validator = validator()->make($request->only('name', 'email'), [
             'email' => ['bail', 'sometimes', 'required', 'email', new EmailHostIsActiveRule],
             'name' => 'sometimes|required',
