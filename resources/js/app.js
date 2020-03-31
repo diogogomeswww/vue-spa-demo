@@ -106,8 +106,8 @@ const app = new Vue({
             });
             Event.$on('field:deleted', function (field_id) {
                 let index = _.findIndex(app.fields, {id: field_id});
-                app.fields.splice(index, 1);
                 this.$notify({text: `Field ${app.fields[index].title} deleted.`});
+                app.fields.splice(index, 1);
             });
             // Subscribers
             Event.$on('subscriber:updated', function (subscriber) {
@@ -120,8 +120,8 @@ const app = new Vue({
             });
             Event.$on('subscriber:deleted', function (subscriber_id) {
                 let index = _.findIndex(app.subscribers, {id: subscriber_id});
-                app.subscribers.splice(index, 1);
                 this.$notify({text: `Subscribers ${app.subscribers[index].name} deleted.`});
+                app.subscribers.splice(index, 1);
             });
         }
     },

@@ -80738,10 +80738,10 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           id: field_id
         });
 
-        app.fields.splice(index, 1);
         this.$notify({
           text: "Field ".concat(app.fields[index].title, " deleted.")
         });
+        app.fields.splice(index, 1);
       }); // Subscribers
 
       Event.$on('subscriber:updated', function (subscriber) {
@@ -80763,10 +80763,10 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
           id: subscriber_id
         });
 
-        app.subscribers.splice(index, 1);
         this.$notify({
-          text: "Subscribers ".concat(app.subscribers[index].title, " deleted.")
+          text: "Subscribers ".concat(app.subscribers[index].name, " deleted.")
         });
+        app.subscribers.splice(index, 1);
       });
     }
   },
