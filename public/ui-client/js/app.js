@@ -2013,6 +2013,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['field'],
   methods: {
@@ -2036,6 +2037,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     formData: function formData() {
       return {
+        // do not allow editing the type
         title: this.form.title
       };
     }
@@ -63428,7 +63430,7 @@ var render = function() {
       _c(
         "b-form-group",
         { attrs: { label: "Type", "label-for": "type" } },
-        [_c("b-form-input", { attrs: { value: _vm.form.type } })],
+        [_c("b-form-input", { attrs: { value: _vm.form.type, disabled: "" } })],
         1
       )
     ],

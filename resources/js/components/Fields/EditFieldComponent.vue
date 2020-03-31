@@ -10,7 +10,8 @@
             label="Type"
             label-for="type"
         >
-            <b-form-input :value="form.type"></b-form-input>
+            <!-- do not allow editing the type -->
+            <b-form-input :value="form.type" disabled></b-form-input>
         </b-form-group>
 
         <template v-slot:modal-footer>
@@ -50,6 +51,7 @@
             },
             formData() {
                 return {
+                    // do not allow editing the type
                     title: this.form.title
                 }
             }
