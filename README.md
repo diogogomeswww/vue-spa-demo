@@ -35,9 +35,9 @@ Front-end
 
 ## TODO
 
-- Frontend: fix bug when creating a new subscriber, the custom fields only appear on a second try, and they are not being sent to the server 
 - Backend: add/edit subscriber => validate cast/validate type for each field's value  
 - Confirmation dialog for delete actions
 - Test responsive layout
 - Add transitions
 - UX - add click listener on table row => edit resource
+- Improve overall UI/Design
