@@ -2361,7 +2361,7 @@ __webpack_require__.r(__webpack_exports__);
       form: {
         name: '',
         email: '',
-        fields: this.fields
+        fields: {}
       },
       errors: []
     };
@@ -2372,10 +2372,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     createSubscriber: function createSubscriber() {
       var vm = this;
-      axios.post('/api/subscribers', this.formData).then(function (response) {
-        Event.$emit('subscriber:new', response.data);
-        vm.hideModal();
+      axios.post('/api/subscribers', _.pickBy(this.form)).then(function (response) {
         vm.resetForm();
+        vm.hideModal();
+        Event.$emit('subscriber:new', response.data);
       })["catch"](function (error) {
         vm.errors = error.response.data.errors;
       });
@@ -2384,17 +2384,9 @@ __webpack_require__.r(__webpack_exports__);
       this.form = {
         name: '',
         email: '',
-        fields: this.fields
+        fields: {}
       };
-    }
-  },
-  computed: {
-    formData: function formData() {
-      return {
-        name: this.form.name,
-        email: this.form.email,
-        fields: _.pick(_.zipObject(_.map(this.fields, 'id'), _.map(this.fields, 'value')))
-      };
+      this.errors = [];
     }
   }
 });
@@ -63922,7 +63914,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm._l(_vm.form.fields, function(field, index) {
+      _vm._l(_vm.fields, function(field) {
         return [
           _c(
             "b-form-group",
@@ -63944,22 +63936,22 @@ var render = function() {
                       "unchecked-value": "0"
                     },
                     model: {
-                      value: _vm.form.fields[index].value,
+                      value: _vm.form.fields[field.id],
                       callback: function($$v) {
-                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                        _vm.$set(_vm.form.fields, field.id, $$v)
                       },
-                      expression: "form.fields[index].value"
+                      expression: "form.fields[field.id]"
                     }
                   })
                 : field.type === "date"
                 ? _c("b-form-datepicker", {
                     attrs: { id: "field_" + field.id },
                     model: {
-                      value: _vm.form.fields[index].value,
+                      value: _vm.form.fields[field.id],
                       callback: function($$v) {
-                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                        _vm.$set(_vm.form.fields, field.id, $$v)
                       },
-                      expression: "form.fields[index].value"
+                      expression: "form.fields[field.id]"
                     }
                   })
                 : _c("b-form-input", {
@@ -63968,11 +63960,11 @@ var render = function() {
                       type: field.type === "string" ? "text" : field.type
                     },
                     model: {
-                      value: _vm.form.fields[index].value,
+                      value: _vm.form.fields[field.id],
                       callback: function($$v) {
-                        _vm.$set(_vm.form.fields[index], "value", $$v)
+                        _vm.$set(_vm.form.fields, field.id, $$v)
                       },
-                      expression: "form.fields[index].value"
+                      expression: "form.fields[field.id]"
                     }
                   })
             ],
