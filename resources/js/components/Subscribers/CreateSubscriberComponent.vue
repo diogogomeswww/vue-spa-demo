@@ -18,7 +18,7 @@
             <b-form-input id="email" v-model="form.email" trim required type="email"></b-form-input>
         </b-form-group>
 
-        <template v-for="(field,index) in form.fields">
+        <template v-for="field in fields">
             <b-form-group
                 :label="field.title"
                 :label-for="`field_${field.id}`"
@@ -27,7 +27,7 @@
             >
                 <b-form-checkbox v-if="field.type === 'boolean'"
                                  :id="`field_${field.id}`"
-                                 v-model="form.fields[index].value"
+                                 v-model="form.fields[field.id]"
                                  value="1"
                                  unchecked-value="0"
                                  class="mt-1"
@@ -35,13 +35,13 @@
 
                 <b-form-datepicker v-else-if="field.type === 'date'"
                                    :id="`field_${field.id}`"
-                                   v-model="form.fields[index].value">
+                                   v-model="form.fields[field.id]">
                 </b-form-datepicker>
 
                 <b-form-input v-else
                               :id="`field_${field.id}`"
                               :type="field.type === 'string' ? 'text' : field.type"
-                              v-model="form.fields[index].value">
+                              v-model="form.fields[field.id]">
                 </b-form-input>
 
             </b-form-group>
@@ -72,7 +72,7 @@
                 form: {
                     name: '',
                     email: '',
-                    fields: this.fields
+                    fields: {}
                 },
                 errors: []
             }
@@ -83,11 +83,11 @@
             },
             createSubscriber() {
                 const vm = this;
-                axios.post('/api/subscribers', this.formData)
+                axios.post('/api/subscribers', _.pickBy(this.form))
                     .then(function (response) {
-                        Event.$emit('subscriber:new', response.data);
-                        vm.hideModal();
                         vm.resetForm();
+                        vm.hideModal();
+                        Event.$emit('subscriber:new', response.data);
                     })
                     .catch(function (error) {
                         vm.errors = error.response.data.errors;
@@ -97,20 +97,9 @@
                 this.form = {
                     name: '',
                     email: '',
-                    fields: this.fields
+                    fields: {}
                 };
-            }
-        },
-        computed: {
-            formData() {
-                return {
-                    name: this.form.name,
-                    email: this.form.email,
-                    fields: _.pick(_.zipObject(
-                        _.map(this.fields, 'id'),
-                        _.map(this.fields, 'value')
-                    ))
-                }
+                this.errors = [];
             }
         }
     }
